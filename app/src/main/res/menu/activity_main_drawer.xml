@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="The project">
+        <menu>
+            <item
+                android:id="@+id/group_item_github"
+                android:icon="@drawable/github"
+                android:title="项目主页" />
+            <item
+                android:id="@+id/group_item_more"
+                android:icon="@drawable/more_info"
+                android:title="更多内容" />
+        </menu>
+    </item>
+    <item android:title="Who we are">
+        <menu>
+            <item
+                android:id="@+id/item_contact"
+                android:icon="@drawable/keep_in_touch"
+                android:title="保持联系" />
+
+            <item
+                android:id="@+id/item_about"
+                android:icon="@drawable/about_us"
+                android:title="关于我们" />
+        </menu>
+    </item>
+</menu>
