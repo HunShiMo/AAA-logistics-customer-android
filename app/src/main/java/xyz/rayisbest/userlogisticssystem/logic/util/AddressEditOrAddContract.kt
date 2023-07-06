@@ -41,7 +41,7 @@ class AddressEditOrAddContract: ActivityResultContract<Map<String, Any>, Address
     }
 
     override fun parseResult(resultCode: Int, intent: Intent?): Address {
-        val address = Address()
+        val address = Address(position = -2)
         if (resultCode == Activity.RESULT_OK) {
             Log.d(TAG, "返回值ok, intent => ${intent.toString()}")
             if (intent != null) {
@@ -53,6 +53,10 @@ class AddressEditOrAddContract: ActivityResultContract<Map<String, Any>, Address
                 address.name = intent.getStringExtra("name")!!
                 address.phoneNum = intent.getStringExtra("phoneNum")!!
                 address.position = intent.getIntExtra("position", 0)
+                address.districtId = intent.getStringExtra("districtId")!!
+                address.cityId = intent.getStringExtra("cityId")!!
+                address.provinceId = intent.getStringExtra("provinceId")!!
+                // address.provinceId
             } else {
                 Log.d(TAG, "返回值不ok, intent => ${intent.toString()}")
             }

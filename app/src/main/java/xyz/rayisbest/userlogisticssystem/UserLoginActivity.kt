@@ -82,9 +82,9 @@ class UserLoginActivity : AppCompatActivity() {
 
     private fun autoLogin() {
         val preferences = getSharedPreferences("data", Context.MODE_PRIVATE)
+        val accessToken = preferences.getString("accessToken", "")
         val refreshToken = preferences.getString("refreshToken", "")
-        val accessToken = preferences.getString("token", "")
-        if ("" != refreshToken && "" != accessToken) {
+        if ("" != accessToken && "" != refreshToken) {
             val refreshTokenBody = RefreshTokenBody(accessToken!!, refreshToken!!)
             userService.refreshToken(refreshTokenBody).enqueue(object : Callback<AjaxResult<RefreshTokenResponse>> {
                 override fun onResponse(
@@ -95,7 +95,7 @@ class UserLoginActivity : AppCompatActivity() {
                     if (data != null && data.code == 200L) {
                         val refreshTokenResponse = data.data
                         "自动登录".showToast()
-                        saveToken(refreshTokenResponse.newAccessToken, refreshToken)
+                        updateToken(refreshTokenResponse.newAccessToken, refreshToken)
                         gotoMainActivity()
                     } else {
                         Log.w(TAG, "请求失败，响应体内容 => $data")
@@ -115,6 +115,36 @@ class UserLoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun refreshToken(accessToken: String, refreshToken: String) {
+        val refreshTokenBody = RefreshTokenBody(accessToken!!, refreshToken!!)
+        userService.refreshToken(refreshTokenBody).enqueue(object : Callback<AjaxResult<RefreshTokenResponse>> {
+            override fun onResponse(
+                call: Call<AjaxResult<RefreshTokenResponse>>,
+                response: Response<AjaxResult<RefreshTokenResponse>>
+            ) {
+                val data = response.body()
+                if (data != null && data.code == 200L) {
+                    val refreshTokenResponse = data.data
+                    "自动登录".showToast()
+                    updateToken(refreshTokenResponse.newAccessToken, refreshToken)
+                    gotoMainActivity()
+                } else {
+                    Log.w(TAG, "请求失败，响应体内容 => $data")
+                    // "账号密码错误，请重试".showToast()
+                }
+            }
+
+            override fun onFailure(call: Call<AjaxResult<RefreshTokenResponse>>, t: Throwable) {
+                t.printStackTrace()
+                Log.d(TAG, t.stackTraceToString())
+                // Log.d(TAG, "请求错误 => $call")
+                if (t is NoNetworkException) {
+                    "网络连接失败，请检查网络连接".showToast(Toast.LENGTH_LONG)
+                }
+            }
+        })
+    }
+
     private fun userLogin(account: String, password: String) {
         val user = User(account = account, password = password)
         userService.userLogin(user).enqueue(object : Callback<AjaxResult<UserLoginResponse>> {
@@ -124,7 +154,7 @@ class UserLoginActivity : AppCompatActivity() {
                 if (data != null && data.code == 200L) {
                     unFreezeLoginButton()
                     val userLoginResponse = data.data
-                    saveToken(userLoginResponse.token, userLoginResponse.refreshToken)
+                    saveData(userLoginResponse, account, password)
                     "登录成功".showToast()
                     gotoMainActivity()
                 } else {
@@ -147,12 +177,32 @@ class UserLoginActivity : AppCompatActivity() {
         })
     }
 
-    private fun saveToken(token: String, refreshToken: String) {
+    private fun updateToken(token:String, refreshToken: String) {
         UserLogisticsSystemApplication.token = token
         UserLogisticsSystemApplication.refreshToken = refreshToken
         getSharedPreferences("data", Context.MODE_PRIVATE).edit {
             putString("token", token)
             putString("refreshToken", refreshToken)
+        }
+    }
+
+    private fun saveData(userLoginResponse: UserLoginResponse, account: String, password: String) {
+        UserLogisticsSystemApplication.token = userLoginResponse.token
+        UserLogisticsSystemApplication.refreshToken = userLoginResponse.refreshToken
+        UserLogisticsSystemApplication.userId = userLoginResponse.member.userId
+        UserLogisticsSystemApplication.userName = userLoginResponse.member.userName
+        UserLogisticsSystemApplication.phoneNum = userLoginResponse.member.phoneNum
+        UserLogisticsSystemApplication.accPassId = userLoginResponse.member.accPassId
+
+        getSharedPreferences("data", Context.MODE_PRIVATE).edit {
+            putString("accessToken", userLoginResponse.token)
+            putString("refreshToken", userLoginResponse.refreshToken)
+            putLong("userId", userLoginResponse.member.userId)
+            putString("userName", userLoginResponse.member.userName)
+            putString("phoneNum", userLoginResponse.member.phoneNum)
+            putLong("accPassId", userLoginResponse.member.accPassId)
+            putString("account", account)
+            putString("password", password)
         }
     }
 

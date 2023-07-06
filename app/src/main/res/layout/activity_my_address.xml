@@ -61,7 +61,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline23" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/addressBackButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="15dp"
@@ -77,5 +77,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="40dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBarInMyAddress"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/recycler_view_address"
+        app:layout_constraintStart_toStartOf="@+id/recycler_view_address"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

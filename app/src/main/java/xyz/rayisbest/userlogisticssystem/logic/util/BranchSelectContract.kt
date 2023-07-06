@@ -20,12 +20,11 @@ class BranchSelectContract: ActivityResultContract<String, Branch>() {
     }
 
     override fun parseResult(resultCode: Int, intent: Intent?): Branch {
-        val branch = Branch()
+        var branch = Branch()
         if (resultCode == Activity.RESULT_OK) {
             Log.d(TAG, "返回值ok, intent => ${intent.toString()}")
             if (intent != null) {
-                branch.branchName = intent.getStringExtra("branchName")!!
-                branch.address = intent.getStringExtra("address")!!
+                branch =  intent.getSerializableExtra("branch") as Branch
             }
         } else {
             Log.d(TAG, "返回值不ok, intent => ${intent.toString()}")

@@ -1,6 +1,5 @@
 package xyz.rayisbest.userlogisticssystem.ui.home
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,13 +13,15 @@ import com.google.android.material.snackbar.Snackbar
 import com.youth.banner.Banner
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.util.LogUtils
+import xyz.rayisbest.userlogisticssystem.R
 import xyz.rayisbest.userlogisticssystem.databinding.FragmentHomeBinding
 import xyz.rayisbest.userlogisticssystem.logic.adapter.ImageAdapter
-import xyz.rayisbest.userlogisticssystem.logic.bean.DataBean
+import xyz.rayisbest.userlogisticssystem.logic.bean.ImageData
 import xyz.rayisbest.userlogisticssystem.logic.util.PlaceOrderContract
+import xyz.rayisbest.userlogisticssystem.logic.viewmodel.HomeViewModel
 import xyz.rayisbest.userlogisticssystem.ui.address.MyAddressActivity
-import xyz.rayisbest.userlogisticssystem.ui.order.PlaceOrder
-import kotlin.math.log
+import xyz.rayisbest.userlogisticssystem.ui.order.PlaceOrderActivity
+import xyz.rayisbest.userlogisticssystem.ui.order.SearchOrderActivity
 
 class HomeFragment : Fragment() {
 
@@ -29,12 +30,15 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
-    private lateinit var banner: Banner<DataBean, ImageAdapter>
-
+    private lateinit var banner: Banner<ImageData, ImageAdapter>
     private lateinit var placeOrderButton: Button
-
     private lateinit var myAddressButton: Button
+    private lateinit var searchOrderButton: Button
+    private val bannerImageList = ArrayList<ImageData>().apply {
+        add(ImageData(R.drawable.ad1, "脚蹬牌轮椅", 1))
+        add(ImageData(R.drawable.ad2, "KFC疯狂星期四", 1))
+        add(ImageData(R.drawable.ad3, "广告位招租", 1))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,17 +52,18 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
         placeOrderButton = binding.placeOrderButton
         myAddressButton = binding.myAddressButton
+        searchOrderButton = binding.searchOrderButton
 
-        banner = binding.banner as Banner<DataBean, ImageAdapter>
+        banner = binding.banner as Banner<ImageData, ImageAdapter>
 
         // 自定义的图片适配器，也可以使用默认的BannerImageAdapter
-        val adapter = ImageAdapter(DataBean.getTestData2())
+        val adapter = ImageAdapter(bannerImageList)
 
         banner.setAdapter(adapter)
             .addBannerLifecycleObserver(this) // 添加生命周期观察者
             .setIndicator(CircleIndicator(activity)) // 设置指示器
             .setOnBannerListener { data: Any, position: Int ->
-                Snackbar.make(banner, (data as DataBean).title, Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(banner, (data as ImageData).title, Snackbar.LENGTH_SHORT).show()
                 LogUtils.d("position：$position")
             }
 
@@ -66,6 +71,8 @@ class HomeFragment : Fragment() {
 
         return root
     }
+
+
 
     private val placeOrderLauncher = registerForActivityResult(PlaceOrderContract()) {
         Log.d(TAG, "收到的order => ${it.toString()}")
@@ -77,11 +84,18 @@ class HomeFragment : Fragment() {
 
     private fun initListener() {
         placeOrderButton.setOnClickListener {
-            placeOrderLauncher.launch("Ada")
+            val intent = Intent(this.requireContext(), PlaceOrderActivity::class.java)
+            startActivity(intent)
+            // placeOrderLauncher.launch("Ada")
         }
 
         myAddressButton.setOnClickListener {
             val intent = Intent(this.requireContext(), MyAddressActivity::class.java)
+            startActivity(intent)
+        }
+
+        searchOrderButton.setOnClickListener {
+            val intent = Intent(this.requireContext(), SearchOrderActivity::class.java)
             startActivity(intent)
         }
     }

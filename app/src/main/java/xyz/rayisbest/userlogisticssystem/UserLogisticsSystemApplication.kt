@@ -17,6 +17,11 @@ class UserLogisticsSystemApplication: Application() {
         lateinit var token: String
         // 刷新token
         lateinit var refreshToken: String
+
+        var userId: Long = 0
+        var userName: String = ""
+        var phoneNum: String = ""
+        var accPassId: Long = 0
     }
 
     override fun onCreate() {

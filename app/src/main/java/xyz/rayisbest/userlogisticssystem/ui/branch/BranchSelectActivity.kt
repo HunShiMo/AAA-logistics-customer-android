@@ -42,8 +42,7 @@ class BranchSelectActivity : AppCompatActivity() {
             override fun onItemClicked(recyclerView: RecyclerView, position: Int, v: View) {
                 "你点击了：position = $position ${branchList[position].branchName}".showToast()
                 val dataIntent = Intent()
-                dataIntent.putExtra("address", "爱来自中国：${branchList[position].address}")
-                dataIntent.putExtra("branchName", "爱来自中国：${branchList[position].branchName}")
+                dataIntent.putExtra("branch", branchList[position])
                 setResult(Activity.RESULT_OK, dataIntent)
                 finish()
             }
@@ -53,9 +52,12 @@ class BranchSelectActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, object :OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val dataIntent = Intent()
-                dataIntent.putExtra("address", "福建省福州市连江县人民路179号")
-                dataIntent.putExtra("branchName", "爱来自中国：人民路179号")
-                setResult(Activity.RESULT_OK, dataIntent)
+                if (branchList.size > 1) {
+                    dataIntent.putExtra("branch", branchList[0])
+                    setResult(Activity.RESULT_OK, dataIntent)
+                } else {
+                    setResult(Activity.RESULT_CANCELED, dataIntent)
+                }
                 finish()
             }
         })
@@ -63,18 +65,17 @@ class BranchSelectActivity : AppCompatActivity() {
 
     private fun initBranchList() {
         branchList.apply {
-            add(Branch(address = "陕西省延安市黄龙县南滩路645号", branchName = "南滩路645号"))
-            add(Branch(address = "安徽省阜阳市蒙城县健康路32号", branchName = "健康路32号"))
-            add(Branch(address = "山西省晋城市右玉县永庆路370号", branchName = "永庆路370号"))
-            add(Branch(address = "山东省德州市临邑县团结路243号", branchName = "团结路243号"))
-            add(Branch(address = "河南省濮阳市南乐县银山路659号", branchName = "银山路659号"))
-            add(Branch(address = "安徽省阜阳市太和县车站路835号", branchName = "车站路835号"))
-            add(Branch(address = "福建省福州市连江县人民路179号", branchName = "人民路179号"))
-            add(Branch(address = "福建省泉州市金门县起凤路120号", branchName = "起凤路120号"))
-            add(Branch(address = "陕西省宝鸡市扶风县王府路705号", branchName = "王府路705号"))
-            add(Branch(address = "湖南省永州市江永县百合路234号", branchName = "百合路234号"))
-            add(Branch(address = "山西省晋城市应县长盛路735号", branchName = "长盛路735号"))
+            add(Branch(branchId = 1, address = "陕西省延安市黄龙县南滩路645号", branchName = "南滩路645号"))
+            add(Branch(branchId = 2, address = "安徽省阜阳市蒙城县健康路32号", branchName = "健康路32号"))
+            add(Branch(branchId = 3, address = "山西省晋城市右玉县永庆路370号", branchName = "永庆路370号"))
+            add(Branch(branchId = 4, address = "山东省德州市临邑县团结路243号", branchName = "团结路243号"))
+            add(Branch(branchId = 5, address = "河南省濮阳市南乐县银山路659号", branchName = "银山路659号"))
+            add(Branch(branchId = 6, address = "安徽省阜阳市太和县车站路835号", branchName = "车站路835号"))
+            add(Branch(branchId = 7, address = "福建省福州市连江县人民路179号", branchName = "人民路179号"))
+            add(Branch(branchId = 8, address = "福建省泉州市金门县起凤路120号", branchName = "起凤路120号"))
+            add(Branch(branchId = 9, address = "陕西省宝鸡市扶风县王府路705号", branchName = "王府路705号"))
+            add(Branch(branchId = 10, address = "湖南省永州市江永县百合路234号", branchName = "百合路234号"))
+            add(Branch(branchId = 12, address = "山西省晋城市应县长盛路735号", branchName = "长盛路735号"))
         }
-
     }
 }

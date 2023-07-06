@@ -1,60 +1,56 @@
 package xyz.rayisbest.userlogisticssystem.ui.order
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.loper7.date_time_picker.dialog.CardDatePickerDialog
-import xyz.rayisbest.userlogisticssystem.R
-import xyz.rayisbest.userlogisticssystem.UserLogisticsSystemApplication
 import xyz.rayisbest.userlogisticssystem.databinding.FragmentSelfSendOrderBinding
-import xyz.rayisbest.userlogisticssystem.logic.util.StringUtils
+import xyz.rayisbest.userlogisticssystem.logic.bean.Branch
+import xyz.rayisbest.userlogisticssystem.logic.util.BranchSelectContract
+import xyz.rayisbest.userlogisticssystem.logic.util.showToast
 
 class SelfSendOrderFragment : Fragment() {
-
-    private var _binding: FragmentSelfSendOrderBinding? = null
-    private val binding get() = _binding!!
-
-    // 日期时间选择器
-    private lateinit var dateTimePicker: Button
+    lateinit var binding: FragmentSelfSendOrderBinding
+    private lateinit var branchChoose: LinearLayout
+    private lateinit var branchAddress: TextView
+    lateinit var branchInfo: Branch
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSelfSendOrderBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-        dateTimePicker = binding.dateTimePicker
+        binding = FragmentSelfSendOrderBinding.inflate(inflater, container, false)
+        val root = binding.root
+        branchChoose = binding.branchChoose
+        branchAddress = binding.branchAddress
+
+        branchInfo = Branch()
 
         init()
 
         return root
     }
 
+    private val launcher = registerForActivityResult(BranchSelectContract()) {
+        Log.d(TAG, "收到的branch => ${it.toString()}")
+        // it.branchName.showToast()
+        branchAddress.text = it.address
+        branchInfo = it.copy()
+    }
+
     private fun init() {
-        dateTimePicker.setOnClickListener {
-            CardDatePickerDialog.builder(this.requireContext())
-                .setTitle("选择预约时间")
-                .setWrapSelectorWheel(false)
-                .setThemeColor(resources.getColor(R.color.my_colorPrimary))
-                .showBackNow(false)
-                // .showDateLabel(true)
-                // .showFocusDateInfo(true)
-                .setTouchHideable(true)
-                .setLabelText("年","月","日","时","分")
-                .setOnChoose("选择") {
-                    dateTimePicker.text = "${StringUtils.conversionTime(it, "yyyy-MM-dd HH:mm")} ${StringUtils.getWeek(it)}"
-                }
-                .setOnCancel("关闭") {}
-                .build().show()
+        branchChoose.setOnClickListener {
+            // "网点选择LinearLayout被点击".showToast()
+            launcher.launch("Ada")
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    companion object {
+        const val TAG = "SelfSendOrderFragment"
     }
 }

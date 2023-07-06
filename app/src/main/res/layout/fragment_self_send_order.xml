@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.order.SelfSendOrderFragment">
+    android:layout_height="wrap_content"
+    tools:context=".ui.order.PickupOrderFragment">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +28,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editTextText"
+            android:id="@+id/goodsNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -47,7 +48,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editTextTextMultiLine"
+            android:id="@+id/goodsDetailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -59,7 +60,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/goodsDetail2"
+            android:id="@+id/payText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="支付方式"
@@ -68,6 +69,7 @@
             android:textStyle="bold" />
 
         <RadioGroup
+            android:id="@+id/selfSendOrderRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="20dp">
@@ -105,23 +107,39 @@
         </RadioGroup>
 
         <TextView
-            android:id="@+id/textView12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="预约取件时间"
+            android:text="网点选择"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/dateTimePicker"
+        <LinearLayout
+            android:id="@+id/branchChoose"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_corner"
-            android:text="选择时间"
-            android:textSize="16sp" />
+            android:layout_height="match_parent"
+            android:background="@drawable/branch_background"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/branchAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".7"
+                android:paddingStart="13dp"
+                android:paddingTop="13dp"
+                android:paddingBottom="13dp"
+                android:text="黄海街道清泉路29号保利MALL四号通道旁蜂巢柜"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:src="@drawable/branch_icon" />
+        </LinearLayout>
 
     </LinearLayout>
-
-
 </androidx.core.widget.NestedScrollView>

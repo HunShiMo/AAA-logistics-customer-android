@@ -34,9 +34,6 @@ class AddressAdapter(private val addressList: List<Address>): RecyclerView.Adapt
         holder.addressPhone.text = branch.phoneNum
         holder.addressDetail.text = branch.province + branch.city + branch.district + branch.street + branch.addressDetail
         holder.addressDefault.visibility = View.INVISIBLE
-
-
     }
-
 
 }

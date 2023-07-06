@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import xyz.rayisbest.userlogisticssystem.databinding.FragmentDashboardBinding
+import xyz.rayisbest.userlogisticssystem.logic.viewmodel.DashboardViewModel
 
 class DashboardFragment : Fragment() {
 

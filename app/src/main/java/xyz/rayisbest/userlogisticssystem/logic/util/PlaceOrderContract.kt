@@ -6,7 +6,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContract
 import xyz.rayisbest.userlogisticssystem.logic.bean.Order
-import xyz.rayisbest.userlogisticssystem.ui.order.PlaceOrder
+import xyz.rayisbest.userlogisticssystem.ui.order.PlaceOrderActivity
 
 class PlaceOrderContract: ActivityResultContract<String, Order>() {
 
@@ -15,7 +15,7 @@ class PlaceOrderContract: ActivityResultContract<String, Order>() {
     }
 
     override fun createIntent(context: Context, input: String): Intent {
-        val intent = Intent(context, PlaceOrder::class.java)
+        val intent = Intent(context, PlaceOrderActivity::class.java)
         return intent
     }
 

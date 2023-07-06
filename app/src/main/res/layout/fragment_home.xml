@@ -72,7 +72,7 @@
         app:layout_constraintGuide_percent="0.9" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/receiverAddressButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -158,14 +158,14 @@
         app:layout_constraintTop_toTopOf="@+id/guideline19" />
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/searchOrderButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/my_order"
+        android:background="@drawable/search_package"
         app:layout_constraintBottom_toTopOf="@+id/guideline20"
         app:layout_constraintEnd_toStartOf="@+id/guideline18"
         app:layout_constraintStart_toStartOf="@+id/guideline17"
@@ -176,10 +176,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="钱包"
-        app:layout_constraintEnd_toEndOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="@+id/receiverAddressButton"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintStart_toStartOf="@+id/receiverAddressButton"
+        app:layout_constraintTop_toBottomOf="@+id/receiverAddressButton" />
 
     <TextView
         android:id="@+id/textView3"
@@ -225,11 +225,11 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="我的订单"
-        app:layout_constraintEnd_toEndOf="@+id/button8"
+        android:text="查快递"
+        app:layout_constraintEnd_toEndOf="@+id/searchOrderButton"
         app:layout_constraintHorizontal_bias="0.375"
-        app:layout_constraintStart_toStartOf="@+id/button8"
-        app:layout_constraintTop_toBottomOf="@+id/button8" />
+        app:layout_constraintStart_toStartOf="@+id/searchOrderButton"
+        app:layout_constraintTop_toBottomOf="@+id/searchOrderButton" />
 
     <com.youth.banner.Banner
         android:id="@+id/banner"

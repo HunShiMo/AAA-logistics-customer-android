@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import xyz.rayisbest.userlogisticssystem.databinding.FragmentNotificationsBinding
+import xyz.rayisbest.userlogisticssystem.logic.viewmodel.NotificationsViewModel
 
 class NotificationsFragment : Fragment() {
 
